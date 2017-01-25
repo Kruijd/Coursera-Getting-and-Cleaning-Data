@@ -11,4 +11,4 @@ This is the course project for the Getting and Cleaning Data Coursera course. Th
     Converts the activity and subject columns into factors
     Creates a tidy dataset that consists of the average (mean) value of each variable for each subject and activity pair.
 
-The end result is shown in the file ResultsTidy.csv.
+The end result is shown in the file ResultsTidy.txt.
