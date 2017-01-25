@@ -1,8 +1,10 @@
 ######## Getting and Cleaning Data Assignment
-# Load DPLYR library and download data neded for the asignment.
-# Place the results in the /Data subfolder; create the folder if it is not existing yet.
-# install.packages("reshape2")
+#Optionally install Load reshape2 library and load
+# install.packages("reshape2") 
 library(reshape2)
+#Download data needed for the asignment.
+#Place the results in the /Data subfolder; create the folder if it is not existing yet.
+
 zipurl<-"http://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 if(!file.exists("./data")){dir.create("./data")}
 download.file(zipurl,"./data/wearable.zip")
