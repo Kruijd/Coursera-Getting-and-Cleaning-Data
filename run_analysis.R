@@ -56,4 +56,4 @@ MeltMeanstdData <-melt(MeanstdData,id=c("Volunteer","Activity"))
 # Reshape MeltMeanstdData by Volunteer and Activity and Feature (the columns) and take the mean of the value
 ResultTidy <- dcast(MeltMeanstdData, Volunteer + Activity ~ variable, mean)
 ##########section 5: write the result set to disk in csv format##############
-write.csv(ResultTidy,"ResultTidy.csv" )
+write.table(ResultTidy,"ResultTidy.txt" )
