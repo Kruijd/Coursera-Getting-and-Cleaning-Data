@@ -8,7 +8,7 @@ the main sections are:
 2. Prepare the data
 3: select the required features
 4: create a tidy result set
-5: write the result set to disk in csv format
+5: write the result set to disk in txt format
 
 1. Download the data
 after the zip file is downloaded, extracted and loaded these are the result sets:
@@ -95,5 +95,5 @@ Each value is nor aggregated to a mean value.
 In the last step the results arestored on disk.
 The choice is made to store it in csv format.
 
-write.csv(ResultTidy,"ResultTidy.csv" ) 
+write.table(ResultTidy,"ResultTidy.txt" ) 
  
