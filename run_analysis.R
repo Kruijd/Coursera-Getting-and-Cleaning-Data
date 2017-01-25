@@ -1,10 +1,10 @@
-######## Getting and Cleaning Data Assignment
-#Optionally install Load reshape2 library and load
-# install.packages("reshape2") 
+######## Getting and Cleaning Data Assignment############
+######### Preparation: download and install required libraries#####
+# Load reshape2 library and download data neded for the asignment.
+# Place the results in the /Data subfolder; create the folder if it is not existing yet.
+# install.packages("reshape2")
 library(reshape2)
-#Download data needed for the asignment.
-#Place the results in the /Data subfolder; create the folder if it is not existing yet.
-
+########Section 1: Downloading the data####################
 zipurl<-"http://d396qusza40orc.cloudfront.net/getdata%2Fprojectfiles%2FUCI%20HAR%20Dataset.zip"
 if(!file.exists("./data")){dir.create("./data")}
 download.file(zipurl,"./data/wearable.zip")
@@ -20,18 +20,7 @@ TrainVolunteer <- read.table("./UCI HAR Dataset/train/Subject_train.txt")
 TestData <- read.table("./UCI HAR Dataset/test/X_test.txt")
 TestActivity <- read.table("./UCI HAR Dataset/test/y_test.txt")
 TestVolunteer <- read.table("./UCI HAR Dataset/test/subject_test.txt")
-
-#############results:#########################################
-# activity_labels:      6 activity labels
-# Feature:             561 features labels
-# TrainData             7352 obs. of  561 variables (rows = columns = features)
-# TrainActivity         7352 obs. of  1 variable values 1-6 (6 activities)
-# TrainVolunteer        7352 obs. of  1 variable values 1-30 (30 volunteers)
-
-# TestData              2947 obs. of  561 variables (measures by feature)
-# TestActivity          2947 obs. of  1 variable values 1-6 (activity)
-# TestVolunteer         2947 obs. of  1 variable values 2-24 (22 volunteers)
-##############################################################
+########Section 2: Prepare the data####################
 # Assign Colum names to the tables
 colnames(activity_labels)<-c("ActivityNumber", "ActivityName")
 colnames(Feature)<-c("FeatureNumber", "FeatureName")
@@ -46,8 +35,10 @@ Test<-cbind(TestVolunteer,TestActivity,TestData)
 #Combine train and test into mergeddata
 MergedData <-rbind (Train,Test)
 # merge the named for activity and Volunteer with the features and assign as Column names
+
 ColumnNames<-c("Volunteer","Activity",as.vector(Feature$FeatureName))
 colnames(MergedData)<-ColumnNames
+########Section 3: select the required features####################
 #### find all features with 'mean' or 'std'in the name and store the result in 
 #select feature names with 'mean' or 'std'
 meanFeatures <- Feature[grep("mean",Feature$FeatureName),] 
@@ -59,9 +50,10 @@ ColumnSelection <-c("Volunteer","Activity",as.vector(MeanStdFeatures$FeatureName
 MeanstdData<-MergedData[,ColumnSelection]
 # Replace Activity ID by Activity Name
 MeanstdData$Activity <- factor(MeanstdData$Activity, levels = activity_labels [,1], labels = activity_labels [,2])
+##########section 4: create a tidy result set##############
 ## Melt the MeltMeanstdData, to a table of Volunteer, Activity and Feature, each with a value
 MeltMeanstdData <-melt(MeanstdData,id=c("Volunteer","Activity"))
 # Reshape MeltMeanstdData by Volunteer and Activity and Feature (the columns) and take the mean of the value
 ResultTidy <- dcast(MeltMeanstdData, Volunteer + Activity ~ variable, mean)
-# write the result set to disk in csv format
+##########section 5: write the result set to disk in csv format##############
 write.csv(ResultTidy,"ResultTidy.csv" )
